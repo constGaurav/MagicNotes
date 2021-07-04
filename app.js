@@ -17,14 +17,19 @@ addBtn.addEventListener("click", (e) => {
   } else {
     notesObj = JSON.parse(notes);
   }
+
   let myObj = {
     title: addTitle.value,
     text: addTxt.value,
   };
-  notesObj.push(myObj);
-  localStorage.setItem("notes", JSON.stringify(notesObj));
-  addTxt.value = "";
-  addTitle.value = "";
+  if (myObj.title != "" || myObj.text != "") {
+    notesObj.push(myObj);
+    localStorage.setItem("notes", JSON.stringify(notesObj));
+    addTxt.value = "";
+    addTitle.value = "";
+  } else {
+    alert("Please Add Note");
+  }
   // console.log(notesObj);
   showNotes();
 });
