@@ -6,34 +6,34 @@ showNotes();
 // If User adds a note, add it to localStorage
 const addBtn = document.getElementById("addBtn");
 addBtn.addEventListener("click", (e) => {
-    const addTxt = document.getElementById("addTxt");
-    const notes = localStorage.getItem("notes");
-    //   console.log(addTxt);
-    //   console.log(notes);
-    if (notes == null) {
+  const addTxt = document.getElementById("addTxt");
+  const notes = localStorage.getItem("notes");
+  //   console.log(addTxt);
+  //   console.log(notes);
+  if (notes == null) {
     //notesObj is a Global Variable.
     notesObj = [];
-    } else {
+  } else {
     notesObj = JSON.parse(notes);
-    }
-    notesObj.push(addTxt.value);
-    localStorage.setItem("notes", JSON.stringify(notesObj));
-    addTxt.value = "";
-    // console.log(notesObj);
-    showNotes();
+  }
+  notesObj.push(addTxt.value);
+  localStorage.setItem("notes", JSON.stringify(notesObj));
+  addTxt.value = "";
+  // console.log(notesObj);
+  showNotes();
 });
 
 // Function to Show Notes
 function showNotes() {
-    const notes = localStorage.getItem("notes");
-    if (notes == null) {
-        notesObj = [];
-    } else {
-        notesObj = JSON.parse(notes);
-    }
-    let html = "";
-    notesObj.forEach(function (element, index) {
-      html += `
+  const notes = localStorage.getItem("notes");
+  if (notes == null) {
+    notesObj = [];
+  } else {
+    notesObj = JSON.parse(notes);
+  }
+  let html = "";
+  notesObj.forEach(function (element, index) {
+    html += `
             <div class="noteCard my-2 mx-2 card" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">Note ${index + 1}</h5>
@@ -41,47 +41,36 @@ function showNotes() {
                         <button id="${index}"onclick="deleteNote(this.id)" class="btn btn-primary">Delete Note</button>
                     </div>
                 </div>`;
-    });
+  });
 
-    let notesElement = document.getElementById('notes');
-    if (notesObj.length != 0) {
-        notesElement.innerHTML = html;
-    } else {
-        notesElement.innerHTML = `Nothing to show! Use "Add a Note" section above to add notes.`;
-    }
+  let notesElement = document.getElementById("notes");
+  if (notesObj.length != 0) {
+    notesElement.innerHTML = html;
+  } else {
+    notesElement.innerHTML = `Nothing to show! Use "Add a Note" section above to add notes.`;
+  }
 }
 
 // Function to delete a note.
 function deleteNote(index) {
-    console.log('I am Deleting', index);
-    notesObj.splice(index, 1);
-    localStorage.setItem("notes", JSON.stringify(notesObj));   
-    showNotes();
+  console.log("I am Deleting", index);
+  notesObj.splice(index, 1);
+  localStorage.setItem("notes", JSON.stringify(notesObj));
+  showNotes();
 }
 
 const search = document.getElementById("searchTxt");
 search.addEventListener("input", function () {
-    let inputVal = search.value.toLowerCase();
-    console.log("Input event fired!!!!!", inputVal);
+  let inputVal = search.value.toLowerCase();
+  console.log("Input event fired!!!!!", inputVal);
 
-    const noteCards = document.getElementsByClassName("noteCard");
-    Array.from(noteCards).forEach(function (element) {
-        let cardTxt = element
-          .getElementsByTagName("p")[0]
-          .innerText.toLowerCase();
-        if(cardTxt.includes(inputVal)){
-            element.style.display = "block";
-        } else {
-            element.style.display = "none";
-        }
-        
-    })
-})
-
-/*
-Upcoming Features:
-1. Add Title
-2. Mark a note as Important
-3. Separate notes by user
-4. Sync and host to web server 
-*/ 
+  const noteCards = document.getElementsByClassName("noteCard");
+  Array.from(noteCards).forEach(function (element) {
+    let cardTxt = element.getElementsByTagName("p")[0].innerText.toLowerCase();
+    if (cardTxt.includes(inputVal)) {
+      element.style.display = "block";
+    } else {
+      element.style.display = "none";
+    }
+  });
+});
