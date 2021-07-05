@@ -28,7 +28,7 @@ addBtn.addEventListener("click", (e) => {
     addTxt.value = "";
     addTitle.value = "";
   } else {
-    alert("Please Add Note");
+    alert("Please Write a Note.");
   }
   // console.log(notesObj);
   showNotes();
