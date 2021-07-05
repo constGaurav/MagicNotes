@@ -8,6 +8,8 @@ const addBtn = document.getElementById("addBtn");
 addBtn.addEventListener("click", (e) => {
   const addTxt = document.getElementById("addTxt");
   const addTitle = document.getElementById("addTitle");
+  const isImportant = document.getElementById("isImportant");
+
   const notes = localStorage.getItem("notes");
   //   console.log(addTxt);
   //   console.log(notes);
@@ -21,16 +23,18 @@ addBtn.addEventListener("click", (e) => {
   let myObj = {
     title: addTitle.value,
     text: addTxt.value,
+    isImp: isImportant.checked,
   };
   if (myObj.title != "" || myObj.text != "") {
     notesObj.push(myObj);
     localStorage.setItem("notes", JSON.stringify(notesObj));
     addTxt.value = "";
     addTitle.value = "";
+    document.getElementById("isImportant").checked = false;
   } else {
     alert("Please Write a Note.");
   }
-  // console.log(notesObj);
+  // console.log(myObj);
   showNotes();
 });
 
@@ -43,8 +47,19 @@ function showNotes() {
     notesObj = JSON.parse(notes);
   }
   let html = "";
+
   notesObj.forEach(function (element, index) {
-    html += `
+    if (element.isImp) {
+      html += `
+          <div class="noteCard my-2 mx-2 card" style="width: 18rem;">
+                  <div class="card-body">
+                      <h5 class="card-title importantNote">${element.title} <span class="badge bg-danger impbadge">Important</span></h5>
+                      <p class="card-text"> ${element.text}</p>
+                      <button id="${index}"onclick="deleteNote(this.id)" class="btn btn-primary">Delete Note</button>
+                  </div>
+              </div>`;
+    } else {
+      html += `
             <div class="noteCard my-2 mx-2 card" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">${element.title}</h5>
@@ -52,6 +67,7 @@ function showNotes() {
                         <button id="${index}"onclick="deleteNote(this.id)" class="btn btn-primary">Delete Note</button>
                     </div>
                 </div>`;
+    }
   });
 
   let notesElement = document.getElementById("notes");

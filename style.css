@@ -10,6 +10,14 @@
 .card-title{
     font-family: 'Poppins', sans-serif;
 }
+.importantNote{
+    color: red;
+}
+.importantNote .impbadge{
+    color: #fff;
+    font-weight: unset;
+    font-size: 1.4vh;
+}
 .notes{
     font-family: 'Source Code Pro', monospace;
 }
